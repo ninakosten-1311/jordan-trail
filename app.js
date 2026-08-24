@@ -121,6 +121,7 @@ let routeData = null;
 let runnerMarker = null;
 let fullRouteLayer = null;
 let completedRouteLayer = null;
+let totalRouteDistance = 0;
 
 const map = L.map("map").setView([31.5, 36.0], 7);
 
@@ -288,6 +289,26 @@ fetch("data/jordan-trail.geojson")
     .then(function(data) {
 
         routeData = orderRouteSegments(data);
+
+        totalRouteDistance = 0;
+
+        for (const feature of routeData.features) {
+
+            const lines = feature.geometry.coordinates;
+
+            for (const coordinates of lines) {
+
+                const line = turf.lineString(coordinates);
+
+                totalRouteDistance =
+                    totalRouteDistance +
+                    turf.length(line, {
+                        units: "kilometers"
+                    });
+            }
+        }
+    
+        updateProgressDisplay();
 
     // START MARKER
 
@@ -525,13 +546,24 @@ function recalculateTotalDistance() {
 
 function updateProgressDisplay() {
 
-    distanceDisplay.textContent = totalDistance.toFixed(1) + " / 675 km";
+    if (totalRouteDistance === 0) {
+        return;
+    }
 
-    const percentage = (totalDistance / 675) * 100;
+    distanceDisplay.textContent =
+        totalDistance.toFixed(1) +
+        " / " +
+        totalRouteDistance.toFixed(1) +
+        " km";
 
-    percentageDisplay.textContent = percentage.toFixed(1) + "%";
+    const percentage =
+        (totalDistance / totalRouteDistance) * 100;
 
-    progressFill.style.width = percentage + "%";
+    percentageDisplay.textContent =
+        percentage.toFixed(1) + "%";
+
+    progressFill.style.width =
+        percentage + "%";
 }
 
 function updateCompletedRoute() {
