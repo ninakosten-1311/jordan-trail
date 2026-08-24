@@ -120,40 +120,37 @@ h1::after {
 }
 
 
-/* ADD RUN BUTTON */
+/* STRAVA SYNC BUTTON */
 
-#add-run-button {
-    padding: 11px 19px;
-
+#sync-strava-button {
+    background-color: #A84B32;
+    color: #FFF9ED;
     border: none;
-    border-radius: 9px;
+    border-radius: 8px;
+    padding: 11px 18px;
 
-    background-color: var(--jordan-red);
-    color: white;
-
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
 
     cursor: pointer;
+    box-shadow: 0 3px 0 #7D3525;
 
-    box-shadow: 0 3px 0 var(--jordan-deep-red);
-
-    transition:
-        background-color 0.15s ease,
-        transform 0.15s ease,
-        box-shadow 0.15s ease;
+    transition: 0.15s ease;
 }
 
-#add-run-button:hover {
-    background-color: var(--jordan-deep-red);
+#sync-strava-button:hover {
+    background-color: #B85A3E;
     transform: translateY(-1px);
+    box-shadow: 0 4px 0 #7D3525;
 }
 
-#add-run-button:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 0 var(--jordan-deep-red);
+#sync-strava-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #7D3525;
 }
-
 
 /* PROGRESS BAR */
 
@@ -379,3 +376,4 @@ h1::after {
         font-size: 14px;
     }
 }
+
