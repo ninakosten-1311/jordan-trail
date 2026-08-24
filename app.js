@@ -1,5 +1,5 @@
 //1. LOADING
-const addRunButton = document.getElementById("add-run-button");
+const syncStravaButton = document.getElementById("sync-strava-button");
 const distanceDisplay = document.getElementById("distance-display");
 const stageName = document.getElementById("stage-name");
 const stageDistance = document.getElementById("stage-distance");
@@ -231,50 +231,109 @@ const runnerIcon = L.icon({
 
 //2.RUNS
 //Delete progress: localStorage.removeItem("runs");
-let runs = JSON.parse(localStorage.getItem("runs")) || [];
+const challengeStartDate = new Date("2026-08-24");
+let stravaRuns =
+    JSON.parse(localStorage.getItem("stravaRuns")) || [];
 
 let totalDistance = 0;
 
-for (const run of runs) {
-    totalDistance = totalDistance + run;
+for (const run of stravaRuns) {
+    totalDistance = totalDistance + run.distanceKm;
 }
 
 updateProgressDisplay();
 
-addRunButton.addEventListener("click", function () {
-    
-    const input = prompt("How many kilometres did you run?");
-    if (input === null) {
-    return;
-    }
-    
-    const runDistance = Number(input);
+async function syncStravaRuns() {
 
-    if (isNaN(runDistance) || runDistance <= 0) {
-    alert("Please enter a valid distance.");
-    return;
+    syncStravaButton.textContent = "Syncing...";
+
+    try {
+
+        const response = await fetch(
+            "/.netlify/functions/strava-runs"
+        );
+
+        if (!response.ok) {
+            throw new Error("Could not load Strava runs");
+        }
+
+        const fetchedRuns = await response.json();
+
+        const knownIds = new Set(
+            stravaRuns.map(function (run) {
+                return run.id;
+            })
+        );
+
+        let newRunsAdded = 0;
+
+        for (const run of fetchedRuns) {
+
+            const runDate = new Date(run.date);
+
+            // Ignore runs from before the Jordan challenge started
+            if (runDate < challengeStartDate) {
+            continue;
+            }
+
+            // Don't import the same Strava activity twice
+            if (!knownIds.has(run.id)) {
+
+                stravaRuns.push(run);
+                knownIds.add(run.id);
+
+                newRunsAdded++;
     }
-    
-    runs.push(runDistance);
+}
+
+        localStorage.setItem(
+            "stravaRuns",
+            JSON.stringify(stravaRuns)
+        );
+
+        recalculateTotalDistance();
+
+        updateProgressDisplay();
+        updateRunnerPosition();
+        updateCompletedRoute();
+        updateCurrentStage();
+
+        alert(
+            newRunsAdded +
+            " new Strava run(s) added."
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Something went wrong while syncing Strava."
+        );
+
+    } finally {
+
+        syncStravaButton.textContent = "Sync Strava";
+    }
+}
+
+syncStravaButton.addEventListener(
+    "click",
+    syncStravaRuns
+);
+
+function recalculateTotalDistance() {
 
     totalDistance = 0;
 
-    for (const run of runs) {
-    totalDistance = totalDistance + run;
+    for (const run of stravaRuns) {
+        totalDistance = totalDistance + run.distanceKm;
     }
-        
-    localStorage.setItem("runs", JSON.stringify(runs));
-
-    updateProgressDisplay();
-    updateRunnerPosition();
-    updateCompletedRoute();
-    updateCurrentStage();
-
-});
+}
 
 function updateProgressDisplay() {
 
-    distanceDisplay.textContent = totalDistance + " / 675 km";
+    distanceDisplay.textContent = totalDistance.toFixed(1) + " / 675 km";
 
     const percentage = (totalDistance / 675) * 100;
 
