@@ -230,7 +230,7 @@ const runnerIcon = L.icon({
 });
 
 //2.RUNS
-const challengeStartDate = new Date("2026-08-01");
+const challengeStartDate = new Date("2026-08-24");
 let stravaRuns =
     JSON.parse(localStorage.getItem("stravaRuns")) || [];
 
