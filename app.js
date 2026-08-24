@@ -128,7 +128,7 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap contributors"
 }).addTo(map);
 
-//1.2 MAP ICONS
+//2.1 MAP DESIGN
 const startIcon = L.icon({
     iconUrl: "images/start.png",
     iconSize: [32, 32],
@@ -143,10 +143,12 @@ const finishIcon = L.icon({
     popupAnchor: [0, -32]
 });
 
-const aqaba = [29.532, 35.006];
-L.marker(aqaba, { icon: finishIcon })
-    .addTo(map)
-    .bindPopup("🌊 Aqaba — Finish");
+const runnerIcon = L.icon({
+    iconUrl: "images/runner.png",
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],
+    popupAnchor: [0, -16]
+});
 
 fetch("data/jordan-trail.geojson")
     .then(function(response) {
@@ -155,6 +157,8 @@ fetch("data/jordan-trail.geojson")
     .then(function(data) {
 
         routeData = data;
+
+        //START MARKER
 
         const firstFeature = routeData.features[0];
         const firstLine = firstFeature.geometry.coordinates[0];
@@ -169,7 +173,25 @@ fetch("data/jordan-trail.geojson")
             .addTo(map)
             .bindPopup("🏁 Jordan Trail — Start");
 
-        fullRouteLayer = L.geoJSON(data, {
+        //FINISH MARKER
+        
+        const lastFeature = routeData.features[routeData.features.length - 1];
+        const lastLines = lastFeature.geometry.coordinates;
+
+        const lastLine = lastLines[lastLines.length - 1];
+        const lastCoordinate = lastLine[lastLine.length - 1];
+
+        const finishLongitude = lastCoordinate[0];
+        const finishLatitude = lastCoordinate[1];
+
+        L.marker(
+            [finishLatitude, finishLongitude],
+            { icon: finishIcon }
+        )
+            .addTo(map)
+            .bindPopup("🌊 Aqaba — Finish");
+        
+            fullRouteLayer = L.geoJSON(data, {
             style: {
                 color: "#9B8D7A",
                 weight: 4
@@ -230,13 +252,6 @@ function updateRunnerPosition() {
         }
     }
 }
-
-const runnerIcon = L.icon({
-    iconUrl: "images/runner.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-    popupAnchor: [0, -16]
-});
 
 //2.RUNS
 const challengeStartDate = new Date("2026-08-24");
