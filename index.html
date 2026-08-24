@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jordan Trail</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+
+    <h1>Jordan Trail
+        <img src="https://flagcdn.com/w40/jo.png" alt="Jordan flag">
+    </h1>
+
+<div class="progress-section">
+
+    <div class="progress-top">
+
+        <div class="progress-stats">
+            <span id="distance-display">0 / 675 km</span>
+            <span id="percentage-display">0% complete</span>
+        </div>
+
+        <button id="add-run-button">+ Add run</button>
+
+    </div>
+
+    <div class="progress-bar">
+        <div id="progress-fill"></div>
+    </div>
+
+</div>
+
+<div id="map"></div>
+
+<div class="stage-card">
+    <p class="stage-label">CURRENT POSITION</p>
+    <h2 id="stage-name">Umm Qais</h2>
+    <p id="stage-distance">Your Jordan journey begins here.</p>
+
+    <div class="next-stage">
+        <span class="next-label">NEXT</span>
+        <span id="next-stage"></span>
+    </div>
+</div>
+
+    </div>  <!-- closes dashboard -->
+
+
+    <!-- STAGE INFORMATION MODAL -->
+
+    <div id="info-modal" class="modal">
+
+        <div class="modal-content">
+
+            <button id="modal-close" class="modal-close">×</button>
+
+            <h2 id="modal-title"></h2>
+
+            <div id="modal-body"></div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
