@@ -258,32 +258,61 @@ async function syncStravaRuns() {
 
         const fetchedRuns = await response.json();
 
-        const knownIds = new Set(
-            stravaRuns.map(function (run) {
-                return run.id;
-            })
-        );
-
-        let newRunsAdded = 0;
-
-        for (const run of fetchedRuns) {
+        const eligibleRuns = fetchedRuns.filter(function (run) {
 
             const runDate = new Date(run.date);
 
-            // Ignore runs from before the Jordan challenge started
-            if (runDate < challengeStartDate) {
-            continue;
-            }
+            const alreadyImported = stravaRuns.some(function (savedRun) {
+                return savedRun.id === run.id;
+            });
 
-            // Don't import the same Strava activity twice
-            if (!knownIds.has(run.id)) {
+            return (
+                runDate >= challengeStartDate &&
+                !alreadyImported
+            );
+        });
 
-                stravaRuns.push(run);
-                knownIds.add(run.id);
+        if (eligibleRuns.length === 0) {
+            alert("No new Strava runs available.");
+            return;
+        }
 
-                newRunsAdded++;
-    }
-}
+        const choiceText = eligibleRuns
+            .map(function (run, index) {
+
+                return (
+                    (index + 1) +
+                    ". " +
+                    run.name +
+                    " — " +
+                    run.distanceKm.toFixed(1) +
+                    " km"
+                );
+            })
+            .join("\n");
+
+        const choice = prompt(
+            "Which run do you want to add?\n\n" +
+            choiceText
+        );
+
+        if (choice === null) {
+            return;
+        }
+
+        const selectedIndex = Number(choice) - 1;
+
+        if (
+            selectedIndex < 0 ||
+            selectedIndex >= eligibleRuns.length
+        ) {
+            alert("Please choose a valid run.");
+            return;
+        }
+
+        const selectedRun = eligibleRuns[selectedIndex];
+
+        stravaRuns.push(selectedRun);
 
         localStorage.setItem(
             "stravaRuns",
@@ -298,8 +327,10 @@ async function syncStravaRuns() {
         updateCurrentStage();
 
         alert(
-            newRunsAdded +
-            " new Strava run(s) added."
+            selectedRun.name +
+            " added: " +
+            selectedRun.distanceKm.toFixed(1) +
+            " km"
         );
 
     } catch (error) {
@@ -307,12 +338,12 @@ async function syncStravaRuns() {
         console.error(error);
 
         alert(
-            "Something went wrong while syncing Strava."
+            "Something went wrong while loading Strava."
         );
 
     } finally {
 
-        syncStravaButton.textContent = "↻ Sync Strava Run";
+        syncStravaButton.textContent = "↻ Sync run";
     }
 }
 
