@@ -230,7 +230,6 @@ const runnerIcon = L.icon({
 });
 
 //2.RUNS
-//Delete progress: localStorage.removeItem("runs");
 const challengeStartDate = new Date("2026-08-24");
 let stravaRuns =
     JSON.parse(localStorage.getItem("stravaRuns")) || [];
@@ -245,7 +244,7 @@ updateProgressDisplay();
 
 async function syncStravaRuns() {
 
-    syncStravaButton.textContent = "Syncing...";
+    syncStravaButton.textContent = "↻ Syncing...";
 
     try {
 
@@ -313,7 +312,7 @@ async function syncStravaRuns() {
 
     } finally {
 
-        syncStravaButton.textContent = "Sync Strava";
+        syncStravaButton.textContent = "↻ Sync Strava Run";
     }
 }
 
