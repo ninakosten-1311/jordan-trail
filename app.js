@@ -143,11 +143,7 @@ const finishIcon = L.icon({
     popupAnchor: [0, -32]
 });
 
-const ummQais = [32.653, 35.684];
 const aqaba = [29.532, 35.006];
-L.marker(ummQais, { icon: startIcon })
-    .addTo(map)
-    .bindPopup("🏁 Umm Qais — Start");
 L.marker(aqaba, { icon: finishIcon })
     .addTo(map)
     .bindPopup("🌊 Aqaba — Finish");
@@ -159,6 +155,19 @@ fetch("data/jordan-trail.geojson")
     .then(function(data) {
 
         routeData = data;
+
+        const firstFeature = routeData.features[0];
+        const firstLine = firstFeature.geometry.coordinates[0];
+
+        const startLongitude = firstLine[0][0];
+        const startLatitude = firstLine[0][1];
+
+        L.marker(
+            [startLatitude, startLongitude],
+            { icon: startIcon }
+        )
+            .addTo(map)
+            .bindPopup("🏁 Jordan Trail — Start");
 
         fullRouteLayer = L.geoJSON(data, {
             style: {
