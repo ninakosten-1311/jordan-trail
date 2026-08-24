@@ -192,73 +192,130 @@ h1::after {
 }
 
 
-/* CURRENT POSITION CARD */
+/* NEXT WAYPOINT */
 
 .stage-card {
-    margin-top: 22px;
-    padding: 24px 26px;
+    margin-top: 20px;
+    background-color: #F6EEDF;
+    border-radius: 14px;
+    overflow: hidden;
+    border-left: 5px solid #A84B32;
+}
 
-    background-color: var(--jordan-stone);
+.stage-card-content {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    min-height: 190px;
+}
 
-    border-radius: 12px;
-
-    border-left: 5px solid var(--jordan-red);
-
-    box-shadow:
-        0 5px 18px rgba(74, 53, 38, 0.10);
+.stage-info {
+    padding: 26px;
 }
 
 .stage-label {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #7C7465;
+}
+
+.stage-info h2 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    color: #843622;
+}
+
+#next-stage-distance {
+    margin: 0 0 20px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#stage-lock-message {
     margin: 0;
+    color: #7C7465;
+    font-size: 14px;
+}
+
+.stage-image {
+    min-height: 190px;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(30%) brightness(0.8);
+}
+
+/* UNLOCKED WAYPOINTS */
+
+#unlocked-waypoints {
+    margin-top: 20px;
+}
+
+.unlocked-stage-card {
+    margin-bottom: 14px;
+    background-color: #F6EEDF;
+    border-radius: 14px;
+    overflow: hidden;
+
+    /* Green left bar */
+    border-left: 5px solid #55734A;
+}
+
+.unlocked-stage-header {
+    width: 100%;
+    padding: 24px 28px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: none;
+    border: none;
+
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.unlocked-stage-label {
+    margin: 0 0 6px;
 
     font-size: 11px;
     font-weight: 700;
-
     letter-spacing: 2px;
-    text-transform: uppercase;
 
-    color: var(--jordan-red);
+    color: #7C7465;
 }
 
-.stage-card h2 {
-    margin: 7px 0 6px;
-
-    font-size: 25px;
-
-    color: var(--jordan-deep-red);
-}
-
-.stage-card p {
+.unlocked-stage-header h2 {
     margin: 0;
+    font-size: 28px;
 
-    line-height: 1.6;
-
-    color: var(--jordan-muted);
+    /* Green waypoint name */
+    color: #55734A;
 }
 
-.next-stage {
-    margin-top: 18px;
-    padding-top: 14px;
-    border-top: 1px solid rgba(168, 75, 50, 0.25);
-
-    display: flex;
-    align-items: center;
-    gap: 14px;
+.unlocked-stage-arrow {
+    font-size: 26px;
+    color: #55734A;
+    transition: transform 0.2s ease;
 }
 
-.next-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.8px;
-    color: #A84B32;
+.unlocked-stage-content {
+    display: none;
+
+    padding: 0 28px 28px;
 }
 
-#next-stage {
-    font-size: 14px;
-    font-weight: 600;
-    color: #4F493F;
+.unlocked-stage-card.is-open
+.unlocked-stage-content {
+    display: block;
 }
 
+.unlocked-stage-card.is-open
+.unlocked-stage-arrow {
+    transform: rotate(180deg);
+}
 
 /* LEAFLET POPUPS */
 

@@ -2,11 +2,12 @@
 const syncStravaButton = document.getElementById("sync-strava-button");
 const distanceDisplay = document.getElementById("distance-display");
 const stageName = document.getElementById("stage-name");
-const stageDistance = document.getElementById("stage-distance");
-const nextStageDisplay = document.getElementById("next-stage");
+const nextStageDistance = document.getElementById("next-stage-distance");
+const stageLockMessage = document.getElementById("stage-lock-message");
+const stageImage = document.getElementById("stage-image");
 const percentageDisplay = document.getElementById("percentage-display");
 const progressFill = document.getElementById("progress-fill");
-
+const unlockedWaypoints = document.getElementById("unlocked-waypoints");
 const infoModal = document.getElementById("info-modal");
 const modalTitle = document.getElementById("modal-title");
 const modalBody = document.getElementById("modal-body");
@@ -26,12 +27,14 @@ const stages = [
         startKm: 80,
         latitude: 32.333,
         longitude: 35.752,
+        image: "images/ajloun.jpg",
         description: "Forested highlands, medieval castles and northern Jordan."
     },
     {
         name: "As-Salt",
         startKm: 160,
         latitude: 32.039,
+        image: "images/as-salt.jpeg",
         longitude: 35.727,
 
         description:
@@ -71,7 +74,7 @@ const stages = [
         name: "Wadi Rum",
         startKm: 560,
         description: "Sandstone mountains, desert landscapes and Bedouin culture."
-    },
+            },
     {
         name: "Aqaba",
         startKm: 650,
@@ -90,23 +93,46 @@ function addStageMarkers() {
             continue;
         }
 
+        const isUnlocked = totalDistance >= stage.startKm;
+
         const marker = L.circleMarker(
             [stage.latitude, stage.longitude],
             {
                 radius: 6,
-                color: "#A84B32",
-                fillColor: "#F6EEDF",
+
+                color: isUnlocked
+                    ? "#A84B32"
+                    : "#8D877B",
+
+                fillColor: isUnlocked
+                    ? "#F6EEDF"
+                    : "#C9C3B7",
+
                 fillOpacity: 1,
                 weight: 2
             }
         ).addTo(map);
 
         marker.on("click", function () {
-            openStageModal(stage);
+
+            if (totalDistance >= stage.startKm) {
+
+                openStageModal(stage);
+
+            } else {
+
+                alert(
+                    stage.name +
+                    " unlocks at km " +
+                    stage.startKm
+                );
+            }
         });
 
         marker.bindTooltip(
-            stage.name + " · km " + stage.startKm,
+            isUnlocked
+                ? stage.name + " · km " + stage.startKm
+                : "🔒 " + stage.name + " · km " + stage.startKm,
             {
                 direction: "top",
                 offset: [0, -6]
@@ -362,6 +388,7 @@ fetch("data/jordan-trail.geojson")
     updateCompletedRoute();
     updateCurrentStage();
     addStageMarkers();
+    updateUnlockedWaypoints();
 });
 
 function updateRunnerPosition() {
@@ -422,6 +449,9 @@ let totalDistance = 0;
 for (const run of stravaRuns) {
     totalDistance = totalDistance + run.distanceKm;
 }
+
+// TEMPORARY TESTING
+totalDistance = 80;
 
 updateProgressDisplay();
 
@@ -508,6 +538,7 @@ async function syncStravaRuns() {
         updateRunnerPosition();
         updateCompletedRoute();
         updateCurrentStage();
+        updateUnlockedWaypoints();
 
         alert(
             selectedRun.name +
@@ -541,6 +572,88 @@ function recalculateTotalDistance() {
 
     for (const run of stravaRuns) {
         totalDistance = totalDistance + run.distanceKm;
+    }
+}
+
+function updateUnlockedWaypoints() {
+
+    unlockedWaypoints.innerHTML = "";
+
+    const unlockedStages = stages.filter(function (stage) {
+        return totalDistance >= stage.startKm;
+    });
+
+    for (const stage of unlockedStages) {
+
+        const card = document.createElement("div");
+        card.className = "unlocked-stage-card";
+
+        card.innerHTML = `
+            <button class="unlocked-stage-header">
+
+                <div>
+                    <p class="unlocked-stage-label">
+                        DISCOVERED WAYPOINT
+                    </p>
+
+                    <h2>${stage.name}</h2>
+                </div>
+
+                <span class="unlocked-stage-arrow">⌄</span>
+
+            </button>
+
+            <div class="unlocked-stage-content">
+
+                <p>${stage.description || ""}</p>
+
+                <div class="modal-section">
+                    <h3>Etymology</h3>
+                    <p>${stage.etymology || "Content coming soon."}</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>History</h3>
+                    <p>${stage.history || "Content coming soon."}</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Culture</h3>
+                    <p>${stage.culture || "Content coming soon."}</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Religion</h3>
+                    <p>${stage.religion || "Content coming soon."}</p>
+                </div>
+
+                ${
+                    stage.video
+                        ? `
+                            <div class="modal-section">
+                                <h3>Watch</h3>
+
+                                <iframe
+                                    class="modal-video"
+                                    src="${stage.video}"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        `
+                        : ""
+                }
+
+            </div>
+        `;
+
+        const header =
+            card.querySelector(".unlocked-stage-header");
+
+        header.addEventListener("click", function () {
+            card.classList.toggle("is-open");
+        });
+
+        unlockedWaypoints.appendChild(card);
     }
 }
 
@@ -640,33 +753,47 @@ completedRouteLayer = L.geoJSON(completedCollection, {
 
 function updateCurrentStage() {
 
-    let currentStage = stages[0];
     let nextStage = null;
 
-    for (let i = 0; i < stages.length; i++) {
+    for (const stage of stages) {
 
-        if (totalDistance >= stages[i].startKm) {
-            currentStage = stages[i];
-        } else {
-            nextStage = stages[i];
+        if (totalDistance < stage.startKm) {
+            nextStage = stage;
             break;
         }
     }
 
-    stageName.textContent = currentStage.name;
-    stageDistance.textContent = currentStage.description;
-
     if (nextStage !== null) {
 
-        const distanceToNext = nextStage.startKm - totalDistance;
+        const distanceToNext =
+            nextStage.startKm - totalDistance;
 
-        nextStageDisplay.textContent =
-            nextStage.name + " · " +
+        stageName.textContent =
+            nextStage.name;
+
+        nextStageDistance.textContent =
             distanceToNext.toFixed(1) + " km to go";
+
+        stageLockMessage.textContent =
+            "🔒 Reach " +
+            nextStage.name +
+            " to discover this waypoint";
+
+        if (nextStage.image) {
+            stageImage.style.backgroundImage =
+                `url("${nextStage.image}")`;
+        }
 
     } else {
 
-        nextStageDisplay.textContent = "Journey complete";
+        stageName.textContent = "Journey complete";
+
+        nextStageDistance.textContent = "";
+
+        stageLockMessage.textContent =
+            "You reached the final waypoint.";
+
+        stageImage.style.backgroundImage = "";
     }
 }
 
