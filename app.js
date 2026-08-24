@@ -150,60 +150,198 @@ const runnerIcon = L.icon({
     popupAnchor: [0, -16]
 });
 
+function orderRouteSegments(data) {
+
+    let segments = [];
+
+    // Collect every LineString from the GeoJSON
+    for (const feature of data.features) {
+
+        if (feature.geometry.type === "LineString") {
+
+            segments.push(
+                feature.geometry.coordinates
+            );
+
+        } else if (feature.geometry.type === "MultiLineString") {
+
+            for (const line of feature.geometry.coordinates) {
+                segments.push(line);
+            }
+        }
+    }
+
+    // Umm Qais, [longitude, latitude]
+    const trailStart = [35.684, 32.653];
+
+    // Find the segment whose endpoint is closest to Umm Qais
+    let startIndex = 0;
+    let startReverse = false;
+    let shortestDistance = Infinity;
+
+    for (let i = 0; i < segments.length; i++) {
+
+        const first = segments[i][0];
+        const last = segments[i][segments[i].length - 1];
+
+        const distanceToFirst = turf.distance(
+            turf.point(trailStart),
+            turf.point(first),
+            { units: "kilometers" }
+        );
+
+        const distanceToLast = turf.distance(
+            turf.point(trailStart),
+            turf.point(last),
+            { units: "kilometers" }
+        );
+
+        if (distanceToFirst < shortestDistance) {
+            shortestDistance = distanceToFirst;
+            startIndex = i;
+            startReverse = false;
+        }
+
+        if (distanceToLast < shortestDistance) {
+            shortestDistance = distanceToLast;
+            startIndex = i;
+            startReverse = true;
+        }
+    }
+
+    let firstSegment = segments.splice(startIndex, 1)[0];
+
+    if (startReverse) {
+        firstSegment.reverse();
+    }
+
+    const orderedSegments = [firstSegment];
+
+    // Keep finding the geographically nearest next segment
+    while (segments.length > 0) {
+
+        const currentSegment =
+            orderedSegments[orderedSegments.length - 1];
+
+        const currentEnd =
+            currentSegment[currentSegment.length - 1];
+
+        let bestIndex = 0;
+        let bestReverse = false;
+        let bestDistance = Infinity;
+
+        for (let i = 0; i < segments.length; i++) {
+
+            const first = segments[i][0];
+            const last = segments[i][segments[i].length - 1];
+
+            const distanceToFirst = turf.distance(
+                turf.point(currentEnd),
+                turf.point(first),
+                { units: "kilometers" }
+            );
+
+            const distanceToLast = turf.distance(
+                turf.point(currentEnd),
+                turf.point(last),
+                { units: "kilometers" }
+            );
+
+            if (distanceToFirst < bestDistance) {
+                bestDistance = distanceToFirst;
+                bestIndex = i;
+                bestReverse = false;
+            }
+
+            if (distanceToLast < bestDistance) {
+                bestDistance = distanceToLast;
+                bestIndex = i;
+                bestReverse = true;
+            }
+        }
+
+        let nextSegment = segments.splice(bestIndex, 1)[0];
+
+        if (bestReverse) {
+            nextSegment.reverse();
+        }
+
+        console.log(
+            "Connecting next trail segment. Gap:",
+            bestDistance.toFixed(3),
+            "km"
+        );
+
+        orderedSegments.push(nextSegment);
+    }
+
+    // Turn the ordered lines back into the format your existing code expects
+    return turf.featureCollection([
+        turf.multiLineString(orderedSegments)
+    ]);
+}
+
 fetch("data/jordan-trail.geojson")
     .then(function(response) {
         return response.json();
     })
     .then(function(data) {
 
-        routeData = data;
+        routeData = orderRouteSegments(data);
 
-        //START MARKER
+    // START MARKER
 
-        const firstFeature = routeData.features[0];
-        const firstLine = firstFeature.geometry.coordinates[0];
+    const firstFeature = routeData.features[0];
+    const firstLine = firstFeature.geometry.coordinates[0];
 
-        const startLongitude = firstLine[0][0];
-        const startLatitude = firstLine[0][1];
+    const startLongitude = firstLine[0][0];
+    const startLatitude = firstLine[0][1];
 
-        L.marker(
-            [startLatitude, startLongitude],
-            { icon: startIcon }
-        )
-            .addTo(map)
-            .bindPopup("🏁 Jordan Trail — Start");
+    L.marker(
+        [startLatitude, startLongitude],
+        { icon: startIcon }
+    )
+        .addTo(map)
+        .bindPopup("🏁 Jordan Trail — Start");
 
-        //FINISH MARKER
-        
-        const lastFeature = routeData.features[routeData.features.length - 1];
-        const lastLines = lastFeature.geometry.coordinates;
 
-        const lastLine = lastLines[lastLines.length - 1];
-        const lastCoordinate = lastLine[lastLine.length - 1];
+    // FINISH MARKER
 
-        const finishLongitude = lastCoordinate[0];
-        const finishLatitude = lastCoordinate[1];
+    const lastFeature =
+        routeData.features[routeData.features.length - 1];
 
-        L.marker(
-            [finishLatitude, finishLongitude],
-            { icon: finishIcon }
-        )
-            .addTo(map)
-            .bindPopup("🌊 Aqaba — Finish");
-        
-            fullRouteLayer = L.geoJSON(data, {
-            style: {
-                color: "#9B8D7A",
-                weight: 4
-            }
-        }).addTo(map);
+    const lastLines =
+        lastFeature.geometry.coordinates;
 
-        updateRunnerPosition();
-        updateCompletedRoute();
-        updateCurrentStage();
-        addStageMarkers();
+    const lastLine =
+        lastLines[lastLines.length - 1];
 
-    });
+    const lastCoordinate =
+        lastLine[lastLine.length - 1];
+
+    const finishLongitude = lastCoordinate[0];
+    const finishLatitude = lastCoordinate[1];
+
+    L.marker(
+        [finishLatitude, finishLongitude],
+        { icon: finishIcon }
+    )
+        .addTo(map)
+        .bindPopup("🌊 Aqaba — Finish");
+
+
+    fullRouteLayer = L.geoJSON(routeData, {
+        style: {
+            color: "#9B8D7A",
+            weight: 4
+        }
+    }).addTo(map);
+
+    updateRunnerPosition();
+    updateCompletedRoute();
+    updateCurrentStage();
+    addStageMarkers();
+});
 
 function updateRunnerPosition() {
 
