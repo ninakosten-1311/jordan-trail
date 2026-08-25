@@ -539,6 +539,8 @@ async function syncStravaRuns() {
         updateCurrentStage();
         updateUnlockedWaypoints();
 
+        await publishProgress();
+
         alert(
             selectedRun.name +
             " added: " +
@@ -560,10 +562,51 @@ async function syncStravaRuns() {
     }
 }
 
-syncStravaButton.addEventListener(
-    "click",
-    syncStravaRuns
-);
+if (syncStravaButton) {
+
+    syncStravaButton.addEventListener(
+        "click",
+        syncStravaRuns
+    );
+
+}
+
+async function publishProgress() {
+
+    try {
+
+        const response = await fetch(
+            "/.netlify/functions/save-progress",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    totalDistance: totalDistance
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Could not publish progress");
+        }
+
+        const result = await response.json();
+
+        console.log(
+            "Progress published:",
+            result.totalDistance
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Could not publish progress:",
+            error
+        );
+    }
+}
 
 function recalculateTotalDistance() {
 
