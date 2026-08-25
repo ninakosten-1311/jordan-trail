@@ -451,32 +451,64 @@ h1::after {
 
 /* MOBILE */
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
 
     .dashboard {
         width: auto;
-        padding: 22px 18px 40px;
+        padding: 18px 14px 32px;
     }
 
     h1 {
-        font-size: 32px;
+        font-size: 34px;
+        margin-bottom: 12px;
+    }
+
+    h1 img {
+        height: 22px;
     }
 
     .progress-top {
-        align-items: center;
+        align-items: flex-end;
+        gap: 12px;
     }
 
     #distance-display {
-        font-size: 19px;
+        font-size: 20px;
     }
 
-    #map {
-        height: 470px;
+    #percentage-display {
+        font-size: 13px;
+    }
+
+    .public-status {
+        padding: 8px 12px;
+    }
+
+    .public-status-label {
+        font-size: 10px;
+    }
+
+    .public-status-date {
+        font-size: 10px;
     }
 
     #sync-strava-button {
-    padding: 10px 14px;
-    font-size: 12px;
+        padding: 9px 12px;
+        font-size: 10px;
+    }
+
+    #map {
+        height: 58vh;
+        min-height: 380px;
+        max-height: 520px;
+    }
+
+    .stage-image {
+        min-height: 180px;
+    }
+
+    .unlocked-stage-header {
+        padding: 20px 22px;
     }
 }
 
