@@ -503,6 +503,10 @@ h1::after {
         max-height: 520px;
     }
 
+    .stage-card-content {
+    grid-template-columns: 1fr;
+    }
+
     .stage-image {
         min-height: 180px;
     }
