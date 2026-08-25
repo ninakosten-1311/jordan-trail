@@ -7,6 +7,7 @@ export default async function (request) {
         const body = await request.json();
 
         const totalDistance = Number(body.totalDistance);
+        const lastRunDate = body.lastRunDate || null;
 
         if (
             !Number.isFinite(totalDistance) ||
@@ -26,13 +27,15 @@ export default async function (request) {
             "jordan",
             {
                 totalDistance: totalDistance,
+                lastRunDate: lastRunDate,
                 updatedAt: new Date().toISOString()
             }
         );
 
         return Response.json({
             success: true,
-            totalDistance: totalDistance
+            totalDistance: totalDistance,
+            lastRunDate: lastRunDate
         });
 
     } catch (error) {
