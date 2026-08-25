@@ -13,6 +13,7 @@ const modalTitle = document.getElementById("modal-title");
 const modalBody = document.getElementById("modal-body");
 const modalClose = document.getElementById("modal-close");
 const isOwnerPage = syncStravaButton !== null;
+const publicStatusDate = document.getElementById("public-status-date");
 
 //2. STAGES
 const stages = [
@@ -150,7 +151,7 @@ let fullRouteLayer = null;
 let completedRouteLayer = null;
 let totalRouteDistance = 0;
 
-const map = L.map("map").setView([31.5, 36.0], 7);
+const map = L.map("map").setView([31, 36.0], 7);
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap contributors"
@@ -159,16 +160,16 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 //2.1 MAP DESIGN
 const startIcon = L.icon({
     iconUrl: "images/start.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32]
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+    popupAnchor: [0, -20]
 });
 
 const finishIcon = L.icon({
     iconUrl: "images/finish.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32]
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+    popupAnchor: [0, -20]
 });
 
 const runnerIcon = L.icon({
@@ -587,15 +588,26 @@ async function publishProgress() {
 
     try {
 
+        const latestRun = stravaRuns.length > 0
+            ? stravaRuns.reduce(function (latest, run) {
+                return new Date(run.date) > new Date(latest.date)
+                    ? run
+                    : latest;
+            })
+            : null;
+
         const response = await fetch(
             "/.netlify/functions/save-progress",
             {
                 method: "POST",
+
                 headers: {
                     "Content-Type": "application/json"
                 },
+
                 body: JSON.stringify({
-                    totalDistance: totalDistance
+                    totalDistance: totalDistance,
+                    lastRunDate: latestRun ? latestRun.date : null
                 })
             }
         );
@@ -620,6 +632,15 @@ async function publishProgress() {
     }
 }
 
+const lastRunDate = new Date(progress.lastRunDate);
+
+publicStatusDate.textContent =
+    "Last run: " +
+    lastRunDate.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "short"
+    });
+
 async function loadPublishedProgress() {
 
     try {
@@ -635,6 +656,23 @@ async function loadPublishedProgress() {
         const progress = await response.json();
 
         totalDistance = Number(progress.totalDistance) || 0;
+
+        if (publicStatusDate && progress.lastRunDate) {
+
+            const lastRunDate = new Date(progress.lastRunDate);
+
+            publicStatusDate.textContent =
+                "Last run: " +
+                lastRunDate.toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short"
+                });
+
+        } else if (publicStatusDate) {
+
+            publicStatusDate.textContent =
+                "No runs yet";
+        }
 
         updateProgressDisplay();
         updateRunnerPosition();
