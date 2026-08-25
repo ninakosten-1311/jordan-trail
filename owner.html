@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jordan Trail</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard">
+
+    <h1>Jordan Trail
+        <img src="https://flagcdn.com/w40/jo.png" alt="Jordan flag">
+    </h1>
+
+<div class="progress-section">
+
+    <div class="progress-top">
+
+        <div class="progress-stats">
+            <span id="distance-display">0 / 675 km</span>
+            <span id="percentage-display">0% complete</span>
+        </div>
+
+        <button id="sync-strava-button">↻ Sync Strava Run</button>
+
+    </div>
+
+    <div class="progress-bar">
+        <div id="progress-fill"></div>
+    </div>
+
+</div>
+
+<div id="map"></div>
+
+<div class="stage-card">
+
+    <div class="stage-card-content">
+
+        <div class="stage-info">
+
+            <p class="stage-label">NEXT WAYPOINT</p>
+
+            <h2 id="stage-name"></h2>
+
+            <p id="next-stage-distance"></p>
+
+            <p id="stage-lock-message" class="stage-lock-message"></p>
+
+        </div>
+
+        <div id="stage-image" class="stage-image"></div>
+
+    </div>
+
+</div>
+
+<div id="unlocked-waypoints"></div>
+
+    </div>  <!-- closes dashboard -->
+
+
+    <!-- STAGE INFORMATION MODAL -->
+
+    <div id="info-modal" class="modal">
+
+        <div class="modal-content">
+
+            <button id="modal-close" class="modal-close">×</button>
+
+            <h2 id="modal-title"></h2>
+
+            <div id="modal-body"></div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
