@@ -389,6 +389,10 @@ fetch("data/jordan-trail.geojson")
     updateCurrentStage();
     addStageMarkers();
     updateUnlockedWaypoints();
+
+    if (syncStravaButton) {
+    publishProgress();
+}
 });
 
 function updateRunnerPosition() {
