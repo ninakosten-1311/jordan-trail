@@ -12,6 +12,7 @@ const infoModal = document.getElementById("info-modal");
 const modalTitle = document.getElementById("modal-title");
 const modalBody = document.getElementById("modal-body");
 const modalClose = document.getElementById("modal-close");
+const isOwnerPage = syncStravaButton !== null;
 
 //2. STAGES
 const stages = [
@@ -384,15 +385,22 @@ fetch("data/jordan-trail.geojson")
         }
     }).addTo(map);
 
-    updateRunnerPosition();
-    updateCompletedRoute();
-    updateCurrentStage();
-    addStageMarkers();
-    updateUnlockedWaypoints();
+    if (isOwnerPage) {
 
-    if (syncStravaButton) {
-    publishProgress();
-}
+        updateRunnerPosition();
+        updateCompletedRoute();
+        updateCurrentStage();
+        addStageMarkers();
+        updateUnlockedWaypoints();
+
+        publishProgress();
+
+    } else {
+
+        loadPublishedProgress();
+        addStageMarkers();
+
+    }
 });
 
 function updateRunnerPosition() {
@@ -607,6 +615,37 @@ async function publishProgress() {
 
         console.error(
             "Could not publish progress:",
+            error
+        );
+    }
+}
+
+async function loadPublishedProgress() {
+
+    try {
+
+        const response = await fetch(
+            "/.netlify/functions/get-progress"
+        );
+
+        if (!response.ok) {
+            throw new Error("Could not load published progress");
+        }
+
+        const progress = await response.json();
+
+        totalDistance = Number(progress.totalDistance) || 0;
+
+        updateProgressDisplay();
+        updateRunnerPosition();
+        updateCompletedRoute();
+        updateCurrentStage();
+        updateUnlockedWaypoints();
+
+    } catch (error) {
+
+        console.error(
+            "Could not load published progress:",
             error
         );
     }
