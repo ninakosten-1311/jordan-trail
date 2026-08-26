@@ -463,11 +463,18 @@ function addStageMarkers() {
                 window.matchMedia("(hover: none)").matches;
 
             if (isMobile) {
-                marker.openTooltip();
+
+                if (isUnlocked) {
+                    openStageModal(stage);
+                } else {
+                    marker.openTooltip();
+                }
+
                 return;
             }
 
-            if (totalDistance >= stage.startKm) {
+            // Desktop
+            if (isUnlocked) {
                 openStageModal(stage);
             }
         });
