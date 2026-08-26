@@ -851,8 +851,7 @@ for (const run of stravaRuns) {
     totalDistance = totalDistance + run.distanceKm;
 }
 
-// TEMPORARY TESTING 
-totalDistance = 4.5;
+// TEMPORARY TESTING totalDistance = 4.5;
 
 updateProgressDisplay();
 
