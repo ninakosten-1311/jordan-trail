@@ -12,32 +12,229 @@ const infoModal = document.getElementById("info-modal");
 const modalTitle = document.getElementById("modal-title");
 const modalBody = document.getElementById("modal-body");
 const modalClose = document.getElementById("modal-close");
+
+if (modalClose && infoModal) {
+
+    modalClose.addEventListener("click", function () {
+        infoModal.classList.remove("is-open");
+    });
+
+    infoModal.addEventListener("click", function (event) {
+        if (event.target === infoModal) {
+            infoModal.classList.remove("is-open");
+        }
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            infoModal.classList.remove("is-open");
+        }
+    });
+}
+
 const isOwnerPage = syncStravaButton !== null;
 const publicStatusDate = document.getElementById("public-status-date");
 
 //2. STAGES
+function getStageContent(stage) {
+
+    return `
+        ${stage.content || "<p>Content coming soon.</p>"}
+
+        ${
+            stage.video
+                ? `
+                    <div class="modal-section">
+                        <iframe
+                            class="modal-video"
+                            src="${stage.video}"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                `
+                : ""
+        }
+    `;
+}
+
 const stages = [
     {
         name: "Umm Qais",
         startKm: 0,
         latitude: 32.653,
         longitude: 35.684,
-        description: "Your Jordan Trail begins here."
+        
+        content: `
+            <section class="waypoint-info">
+
+            <div class="waypoint-section">
+                <h3>🏺 A little history</h3>
+                <p>
+                Your journey begins among the ruins of <strong>Gadara</strong> (former name for Umm Qais),
+                an ancient city with more than two thousand years of history beneath its streets.
+                Founded during the Hellenistic period, Gadara later became part of the
+                <strong>Decapolis</strong>, a group of cities in the eastern Roman world
+                strongly influenced by Greek culture. Its position high above the surrounding
+                valleys made it both strategically important and spectacularly situated.
+                </p>
+
+                <p>
+                Under Roman rule, Gadara flourished as a centre of culture and learning.
+                The city became associated with philosophers, poets and intellectuals,
+                including the poet and philosopher <strong>Meleager of Gadara</strong>.
+                Its wealth can still be seen in the remains scattered around Um Qais:
+                colonnaded streets, baths, tombs and two theatres. Many were constructed
+                from the region's distinctive <strong>black basalt</strong>, giving the
+                ruins a very different appearance from the pale limestone cities found
+                elsewhere in Jordan.
+                </p>
+
+                <p>
+                Gadara continued to develop during the <strong>Byzantine period</strong>,
+                when churches were built among the older Roman structures. Following the
+                Muslim conquest of the region in the seventh century, the settlement became
+                part of the emerging Islamic world. A major earthquake in <strong>749 CE</strong>
+                contributed to the decline of the ancient city, although people continued
+                to live in and around its ruins for centuries.
+                </p>
+
+                <p>
+                Much later, an Ottoman-era village grew directly over part of ancient
+                Gadara. Stone houses were built alongside — and sometimes using material
+                from — the much older ruins. Today, Um Qais is therefore not one frozen
+                archaeological site, but a place where <strong>Hellenistic, Roman,
+                Byzantine, Islamic and Ottoman history</strong> sit almost literally on
+                top of one another.
+                </p>
+
+                <p>
+                And this is where your journey south begins: from the black basalt ruins
+                of a Greco-Roman city on Jordan's northern frontier, all the way to the
+                Red Sea.
+                </p>
+            </div>
+
+            <div class="waypoint-section">
+                <h3>🗣️ Arabic along the way</h3>
+
+                <div class="arabic-phrase">
+                    <p class="arabic">يلا</p>
+                    <p><strong>Yalla!</strong></p>
+                    <p><em>"Let's go!" / "Come on!"</em></p>
+                </div>
+
+                <p>
+                    Probably the only appropriate phrase for kilometre zero.
+                    You'll hear <em>yalla</em> constantly in Jordan and across
+                    the Arabic-speaking world.
+                </p>
+            </div>
+
+            <div class="waypoint-section">
+            <h3>🌿 The landscape</h3>
+
+            <p>
+                Forget the image of Jordan as an endless desert, for now. The journey
+                begins in the <strong>green hills of northern Jordan</strong>, where the
+                landscape has much more in common with the Mediterranean than with the
+                deserts you will encounter hundreds of kilometres further south.
+            </p>
+
+            <p>
+                Um Qais sits on a high ridge above the <strong>Yarmouk River valley</strong>,
+                close to Jordan's borders with Syria and Israel. From the plateau, the land
+                falls dramatically away toward the Jordan Valley. On a clear day, you can
+                look across the <strong>Sea of Galilee</strong> and toward the
+                <strong>Golan Heights</strong>. An unusually expansive view that helps
+                explain why this hilltop has been strategically important for thousands
+                of years.
+            </p>
+
+            <p>
+                The hills around you form part of Jordan's
+                <strong>Mediterranean climatic zone</strong>. Winters here are cooler and
+                wetter than in most of the country, allowing grasses, wildflowers, orchards
+                and olive groves to cover slopes that can become intensely green during
+                winter and spring. By late summer, much of that green has faded into the
+                dry gold and ochre of the Mediterranean landscape.
+            </p>
+
+            <p>
+                Beneath your feet is another clue to the character of the north:
+                <strong>dark volcanic basalt</strong>. Ancient lava flows shaped parts of
+                this region, and the same black stone appears throughout the ruins of
+                Gadara. Here, geology and architecture almost blend into one another —
+                Roman streets, theatres and village houses built from the rock of the
+                surrounding landscape.
+            </p>
+
+            <p>
+                As you leave Um Qais, the trail descends through
+                <strong>farmland, olive groves and rolling valleys</strong>. Ahead lie the
+                wooded highlands of Ajloun, home to some of Jordan's most extensive remaining
+                oak and pine forests.
+            </p>
+
+            <p>
+                Remember this landscape. Over the next <strong>658 kilometres</strong>,
+                it will transform almost completely: green Mediterranean hills will give
+                way to deep wadis, high plateaus, bare sandstone mountains and eventually
+                the vast desert of Wadi Rum.
+            </p>
+            </div>
+
+            <div class="waypoint-section">
+            <h3>🎥 Have a look</h3>
+
+            <iframe
+                class="waypoint-video"
+                src="https://www.youtube.com/embed/l1AvSQNZrK4?si=R2hTsarxEjQ0_p51"
+                title="YouTube video"
+                allowfullscreen>
+            </iframe>
+            </div>
+
+            </section>
+            `
     },
     {
-        name: "Ajloun",
-        startKm: 80,
-        latitude: 32.333,
-        longitude: 35.752,
+        name: "Ziglab Lake",
+        startKm: 24.3,
+        latitude: 32.526,
+        longitude: 35.613,
+        image: "images/ziglab.jpg",
+        description: "X"
+    },
+    {
+        name: "Rasoun",
+        startKm: 61.3,
+        latitude: 32.401,
+        longitude: 35.758,
+        image: "images/rasoun.jpg",
+        description: "X"
+    },
+    {
+        name: "Ajloun Castle",
+        startKm: 78.1,
+        latitude: 32.328,
+        longitude: 35.728,
         image: "images/ajloun.jpg",
         description: "Forested highlands, medieval castles and northern Jordan."
     },
     {
+        name: "King Talal Dam",
+        startKm: 110,
+        latitude: 32.182,
+        longitude: 35.797,
+        image: "images/king-talal-dam.jpg",
+        description: "Forested highlands, medieval castles and northern Jordan."
+    },
+    {
         name: "As-Salt",
-        startKm: 160,
-        latitude: 32.039,
+        startKm: 140.4,
+        latitude: 32.038,
         image: "images/as-salt.jpeg",
-        longitude: 35.727,
+        longitude: 35.729,
 
         description:
             "Ottoman-era architecture and an important historic town.",
@@ -58,28 +255,147 @@ const stages = [
             "https://www.youtube.com/embed/VIDEO_ID"
     },
     {
+        name: "Iraq al-Amir",
+        startKm: 162.5,
+        latitude: 31.918,
+        longitude: 35.752,
+        image: "images/iraq al-amir.jpg",
+        description: "Forested highlands, medieval castles and northern Jordan."
+    },
+    {
+        name: "Oyoun Al-Theeb",
+        startKm: 203.5,
+        latitude: 31.718,
+        longitude: 35.668,
+        image: "images/oyoun al-theeb.jpg",
+        description: "Forested highlands, medieval castles and northern Jordan."
+    },
+    {
+        name: "Wadi Zarqa Ma'in",
+        startKm: 224.6,
+        latitude: 31.601,
+        longitude: 35.635,
+        image: "images/wadi zarqa main.jpg",
+        description: "Forested highlands, medieval castles and northern Jordan."
+    },
+    {
         name: "Wadi Mujib",
-        startKm: 260,
-        description: "A dramatic canyon landscape near the Dead Sea."
+        startKm: 256.8,
+        latitude: 31.451,
+        longitude: 35.724,
+        image: "images/wadi mujib.jpg",
+        description: "Forested highlands, medieval castles and northern Jordan."
+    },
+    {
+        name: "Al-Karak",
+        startKm: 299.4,
+        latitude: 31.182,
+        longitude: 35.702,
+        image: "images/al-karak.jpg",
+        description: "Forested highlands, medieval castles and northern Jordan."
+    },
+    {
+        name: "Tor Al-Taboun",
+        startKm: 326.2,
+        latitude: 31.008,
+        longitude: 35.664,
+        image: "images/tor al-taboun.jpg",
+        description: "Forested highlands, medieval castles and northern Jordan."
+    },
+    {
+        name: "Ma'tan",
+        startKm: 367.8,
+        latitude: 30.765,
+        longitude: 35.594,
+        image: "images/matan.jpg",
+        description: "Forested highlands, medieval castles and northern Jordan."
     },
     {
         name: "Dana",
-        startKm: 380,
+        startKm: 383.3,
+        latitude: 30.676,
+        longitude: 35.610,
+        image: "images/dana.jpg",
+        description: "Mountains, biodiversity and one of Jordan's great nature reserves."
+    },
+    {
+        name: "Ras Al-Feid",
+        startKm: 420.2,
+        latitude: 30.502,
+        longitude: 35.484,
+        image: "images/ras al-feid.jpg",
+        description: "Mountains, biodiversity and one of Jordan's great nature reserves."
+    },
+    {
+        name: "Little Petra",
+        startKm: 443,
+        latitude: 30.375,
+        longitude: 35.452,
+        image: "images/little petra.jpeg",
         description: "Mountains, biodiversity and one of Jordan's great nature reserves."
     },
     {
         name: "Petra",
-        startKm: 470,
+        startKm: 455.6,
+        latitude: 30.325,
+        longitude: 35.468,
+        image: "images/petra.jpg",
+        description: "The Nabataean capital, carved into sandstone."
+    },
+    {
+        name: "Wadi Al-Saif",
+        startKm: 490.7,
+        latitude: 30.183,
+        longitude: 35.292,
+        image: "images/wadi al-saif.jpg",
+        description: "The Nabataean capital, carved into sandstone."
+    },
+    {
+        name: "Wadi Aheimar",
+        startKm: 520.8,
+        latitude: 30.014,
+        longitude: 35.237,
+        image: "images/wadi aheimar.jpg",
+        description: "The Nabataean capital, carved into sandstone."
+    },
+    {
+        name: "Al-Humeima",
+        startKm: 547.2,
+        latitude: 29.950,
+        longitude: 35.347,
+        image: "images/al-humeima.jpg",
+        description: "The Nabataean capital, carved into sandstone."
+    },
+    {
+        name: "Jabal Kharazah",
+        startKm: 566.1,
+        latitude: 29.810,
+        longitude: 35.455,
+        image: "images/jabal kharazah.jpg",
         description: "The Nabataean capital, carved into sandstone."
     },
     {
         name: "Wadi Rum",
-        startKm: 560,
+        startKm: 594.1,
+        latitude: 29.578,
+        longitude: 35.420,
+        image: "images/wadi rum.jpg",
         description: "Sandstone mountains, desert landscapes and Bedouin culture."
-            },
+    },
     {
-        name: "Aqaba",
-        startKm: 650,
+        name: "Wadi Waraqa",
+        startKm: 614.7,
+        latitude: 29.426,
+        longitude: 35.325,
+        image: "images/wadi waraqa.jpg",
+        description: "Sandstone mountains, desert landscapes and Bedouin culture."
+    },
+    {
+        name: "Red Sea / Aqaba",
+        startKm: 658.4,
+        latitude: 29.425,
+        longitude: 34.974,
+        image: "images/aqaba.jpg",
         description: "The final stretch reaches the Red Sea."
     }
 ];
@@ -97,23 +413,49 @@ function addStageMarkers() {
 
         const isUnlocked = totalDistance >= stage.startKm;
 
-        const marker = L.circleMarker(
-            [stage.latitude, stage.longitude],
-            {
-                radius: 6,
+        let marker;
 
-                color: isUnlocked
-                    ? "#A84B32"
-                    : "#8D877B",
+        const isFirstStage = stage === stages[0];
+        const isLastStage = stage === stages[stages.length - 1];
 
-                fillColor: isUnlocked
-                    ? "#F6EEDF"
-                    : "#C9C3B7",
+        if (isFirstStage) {
 
-                fillOpacity: 1,
-                weight: 2
-            }
-        ).addTo(map);
+            marker = L.marker(
+                [stage.latitude, stage.longitude],
+                {
+                    icon: startIcon
+                }
+            ).addTo(map);
+
+        } else if (isLastStage) {
+
+            marker = L.marker(
+                [stage.latitude, stage.longitude],
+                {
+                    icon: finishIcon
+                }
+            ).addTo(map);
+
+        } else {
+
+            marker = L.circleMarker(
+                [stage.latitude, stage.longitude],
+                {
+                    radius: 6,
+
+                    color: isUnlocked
+                        ? "#A84B32"
+                        : "#8D877B",
+
+                    fillColor: isUnlocked
+                        ? "#F6EEDF"
+                        : "#C9C3B7",
+
+                    fillOpacity: 1,
+                    weight: 2
+                }
+            ).addTo(map);
+        }
 
         marker.on("click", function () {
 
@@ -131,15 +473,90 @@ function addStageMarkers() {
             }
         });
 
-        marker.bindTooltip(
-            isUnlocked
-                ? stage.name + " · km " + stage.startKm
-                : "🔒 " + stage.name + " · km " + stage.startKm,
-            {
-                direction: "top",
-                offset: [0, -6]
+        const tooltipContent = `
+            <div class="stage-tooltip-card">
+
+                ${
+                    stage.image
+                        ? `
+                            <div
+                                class="stage-tooltip-image"
+                                style="background-image: url('${stage.image}')">
+                            </div>
+                        `
+                        : ""
+                }
+
+                <div class="stage-tooltip-text">
+
+                    <div class="stage-tooltip-label">
+                        ${isUnlocked ? "DISCOVERED" : "🔒 LOCKED WAYPOINT"}
+                    </div>
+
+                    <div class="stage-tooltip-name">
+                        ${stage.name}
+                    </div>
+
+                    <div class="stage-tooltip-distance">
+                        km ${stage.startKm}
+                    </div>
+
+                    <div class="stage-tooltip-message">
+                        ${
+                            isUnlocked
+                                ? "Click to explore"
+                                : "Keep running to discover this place"
+                        }
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+        marker.on("mouseover", function () {
+
+            const markerPoint =
+                map.latLngToContainerPoint(marker.getLatLng());
+
+            const mapHeight = map.getSize().y;
+
+            let tooltipDirection;
+            let tooltipOffset;
+
+            // Marker is in upper half of map:
+            // show card underneath
+            if (markerPoint.y < mapHeight / 2) {
+
+                tooltipDirection = "bottom";
+                tooltipOffset = [0, 10];
+
+            } else {
+
+                // Marker is in lower half:
+                // show card above
+                tooltipDirection = "top";
+                tooltipOffset = [0, -10];
             }
-        );
+
+            marker.bindTooltip(
+                tooltipContent,
+                {
+                    direction: tooltipDirection,
+                    offset: tooltipOffset,
+                    className: "stage-tooltip",
+                    opacity: 1
+                }
+            );
+
+            marker.openTooltip();
+        });
+
+        marker.on("mouseout", function () {
+
+            marker.closeTooltip();
+
+        });
 
     }
 }
@@ -338,47 +755,6 @@ fetch("data/jordan-trail.geojson")
     
         updateProgressDisplay();
 
-    // START MARKER
-
-    const firstFeature = routeData.features[0];
-    const firstLine = firstFeature.geometry.coordinates[0];
-
-    const startLongitude = firstLine[0][0];
-    const startLatitude = firstLine[0][1];
-
-    L.marker(
-        [startLatitude, startLongitude],
-        { icon: startIcon }
-    )
-        .addTo(map)
-        .bindPopup("🏁 Jordan Trail — Start");
-
-
-    // FINISH MARKER
-
-    const lastFeature =
-        routeData.features[routeData.features.length - 1];
-
-    const lastLines =
-        lastFeature.geometry.coordinates;
-
-    const lastLine =
-        lastLines[lastLines.length - 1];
-
-    const lastCoordinate =
-        lastLine[lastLine.length - 1];
-
-    const finishLongitude = lastCoordinate[0];
-    const finishLatitude = lastCoordinate[1];
-
-    L.marker(
-        [finishLatitude, finishLongitude],
-        { icon: finishIcon }
-    )
-        .addTo(map)
-        .bindPopup("🌊 Aqaba — Finish");
-
-
     fullRouteLayer = L.geoJSON(routeData, {
         style: {
             color: "#9B8D7A",
@@ -463,7 +839,8 @@ for (const run of stravaRuns) {
     totalDistance = totalDistance + run.distanceKm;
 }
 
-// TEMPORARY TESTING totalDistance = 80;
+// TEMPORARY TESTING 
+totalDistance = 4.5;
 
 updateProgressDisplay();
 
@@ -727,46 +1104,9 @@ function updateUnlockedWaypoints() {
             </button>
 
             <div class="unlocked-stage-content">
-
-                <p>${stage.description || ""}</p>
-
-                <div class="modal-section">
-                    <h3>Etymology</h3>
-                    <p>${stage.etymology || "Content coming soon."}</p>
-                </div>
-
-                <div class="modal-section">
-                    <h3>History</h3>
-                    <p>${stage.history || "Content coming soon."}</p>
-                </div>
-
-                <div class="modal-section">
-                    <h3>Culture</h3>
-                    <p>${stage.culture || "Content coming soon."}</p>
-                </div>
-
-                <div class="modal-section">
-                    <h3>Religion</h3>
-                    <p>${stage.religion || "Content coming soon."}</p>
-                </div>
-
-                ${
-                    stage.video
-                        ? `
-                            <div class="modal-section">
-                                <h3>Watch</h3>
-
-                                <iframe
-                                    class="modal-video"
-                                    src="${stage.video}"
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
-                        `
-                        : ""
-                }
-
+                ${getStageContent(stage)}
             </div>
+
         `;
 
         const header =
@@ -926,65 +1266,7 @@ function openStageModal(stage) {
 
     modalTitle.textContent = stage.name;
 
-    modalBody.innerHTML = `
-        <p>${stage.description || ""}</p>
-
-        <div class="modal-section">
-            <h3>Etymology</h3>
-            <p>${stage.etymology || "Content coming soon."}</p>
-        </div>
-
-        <div class="modal-section">
-            <h3>History</h3>
-            <p>${stage.history || "Content coming soon."}</p>
-        </div>
-
-        <div class="modal-section">
-            <h3>Culture</h3>
-            <p>${stage.culture || "Content coming soon."}</p>
-        </div>
-
-        <div class="modal-section">
-            <h3>Religion</h3>
-            <p>${stage.religion || "Content coming soon."}</p>
-        </div>
-
-        ${
-            stage.video
-                ? `
-                <div class="modal-section">
-                    <h3>Watch</h3>
-
-                    <iframe
-                        class="modal-video"
-                        src="${stage.video}"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                `
-                : ""
-        }
-    `;
+    modalBody.innerHTML = getStageContent(stage);
 
     infoModal.classList.add("is-open");
 }
-
-modalClose.addEventListener("click", function () {
-    infoModal.classList.remove("is-open");
-});
-
-infoModal.addEventListener("click", function (event) {
-
-    if (event.target === infoModal) {
-        infoModal.classList.remove("is-open");
-    }
-
-});
-
-document.addEventListener("keydown", function (event) {
-
-    if (event.key === "Escape") {
-        infoModal.classList.remove("is-open");
-    }
-
-});
