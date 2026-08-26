@@ -459,17 +459,16 @@ function addStageMarkers() {
 
         marker.on("click", function () {
 
+            const isMobile =
+                window.matchMedia("(hover: none)").matches;
+
+            if (isMobile) {
+                marker.openTooltip();
+                return;
+            }
+
             if (totalDistance >= stage.startKm) {
-
                 openStageModal(stage);
-
-            } else {
-
-                alert(
-                    stage.name +
-                    " unlocks at km " +
-                    stage.startKm
-                );
             }
         });
 
@@ -514,48 +513,54 @@ function addStageMarkers() {
             </div>
         `;
 
+        const markerPoint =
+            map.latLngToContainerPoint(marker.getLatLng());
+
+        const mapHeight = map.getSize().y;
+
+        let tooltipDirection;
+        let tooltipOffset;
+
+        if (markerPoint.y < mapHeight / 2) {
+
+            tooltipDirection = "bottom";
+            tooltipOffset = [0, 10];
+
+        } else {
+
+            tooltipDirection = "top";
+            tooltipOffset = [0, -10];
+        }
+
+        marker.bindTooltip(
+            tooltipContent,
+            {
+                direction: tooltipDirection,
+                offset: tooltipOffset,
+                className: "stage-tooltip",
+                opacity: 1
+            }
+        );
+
+        // Desktop hover
         marker.on("mouseover", function () {
 
-            const markerPoint =
-                map.latLngToContainerPoint(marker.getLatLng());
+            const isMobile =
+                window.matchMedia("(hover: none)").matches;
 
-            const mapHeight = map.getSize().y;
-
-            let tooltipDirection;
-            let tooltipOffset;
-
-            // Marker is in upper half of map:
-            // show card underneath
-            if (markerPoint.y < mapHeight / 2) {
-
-                tooltipDirection = "bottom";
-                tooltipOffset = [0, 10];
-
-            } else {
-
-                // Marker is in lower half:
-                // show card above
-                tooltipDirection = "top";
-                tooltipOffset = [0, -10];
+            if (!isMobile) {
+                marker.openTooltip();
             }
-
-            marker.bindTooltip(
-                tooltipContent,
-                {
-                    direction: tooltipDirection,
-                    offset: tooltipOffset,
-                    className: "stage-tooltip",
-                    opacity: 1
-                }
-            );
-
-            marker.openTooltip();
         });
 
         marker.on("mouseout", function () {
 
-            marker.closeTooltip();
+            const isMobile =
+                window.matchMedia("(hover: none)").matches;
 
+            if (!isMobile) {
+                marker.closeTooltip();
+            }
         });
 
     }
