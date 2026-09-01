@@ -203,7 +203,131 @@ const stages = [
         latitude: 32.526,
         longitude: 35.613,
         image: "images/ziglab.jpg",
-        description: "X"
+        content: `
+        <section class="waypoint-info">
+
+            <div class="waypoint-section">
+                <h3>🌿 The landscape</h3>
+
+                <p>
+                    <strong>Jordan: famously green and full of lakes... right?</strong>
+                    Probably not the image that first came to mind. But here in the far north,
+                    Jordan looks surprisingly different from the sandstone deserts it is famous
+                    for. Around Ziglab, rolling hills, farmland and olive groves surround valleys
+                    that can turn intensely green after the winter rains.
+                </p>
+
+                <p>
+                    This is one of the <strong>wettest and most fertile parts of Jordan</strong>.
+                    The climate here is Mediterranean: cool, rainy winters followed by long,
+                    hot and almost completely dry summers. That means the landscape has two
+                    personalities. In winter and spring it can be covered in green grass and
+                    wildflowers; by late summer those same hills have turned golden and dry.
+                </p>
+
+                <p>
+                    And then there is the lake itself. <strong>Ziglab Lake is actually a reservoir</strong>,
+                    created by damming Wadi Ziglab to capture water flowing down from the northern
+                    highlands. In a country where water scarcity is one of the defining environmental
+                    challenges, reservoirs like this are far more important than their modest size
+                    might suggest. The stored water helps support agriculture in the fertile
+                    Jordan Valley below.
+                </p>
+
+                <div class="fun-fact">
+                    <strong>💡 Plot twist:</strong> Jordan is one of the most water-scarce countries
+                    in the world. So this little blue patch on the map is a much bigger deal than
+                    it might look.
+                </div>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>📷 Have a look</h3>
+
+                <div class="waypoint-gallery">
+                    <img src="images/ziglab.jpg" alt="Green hills around Ziglab">
+                    <img src="images/ziglab2.jpg" alt="Ziglab Reservoir">
+                    <img src="images/ziglab3.jpg" alt="Landscape of northern Jordan">
+                </div>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>🌍 Why is everything so... hilly?</h3>
+
+                <p>
+                    Ziglab sits beside one of the great geological scars of the Middle East:
+                    the <strong>Jordan Rift Valley</strong>. It forms part of the Dead Sea Transform,
+                    an enormous fault system where the Arabian and African tectonic plates have
+                    been sliding past one another for millions of years.
+                </p>
+
+                <p>
+                    That movement helped create the dramatic difference between Jordan's highlands
+                    and the deep valley to the west. Rainwater then did the detailed work, cutting
+                    steep <strong>wadis</strong> through the hills and carrying water down toward
+                    the Jordan Valley.
+                </p>
+
+                <div class="fun-fact">
+                    <strong> It gets much deeper.</strong> Follow this same geological depression
+                    south and eventually you reach the Dead Sea — the lowest exposed land surface
+                    on Earth, more than 400 metres below sea level.
+                </div>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>🦅 On the wild side</h3>
+
+                <p>
+                    Green hills + farmland + rocky wadis + a reservoir make this corner of Jordan
+                    unusually varied for wildlife. Northern Jordan is home to animals such as
+                    <strong>golden jackals, red foxes and wild boar</strong>, alongside reptiles
+                    and a huge variety of birds.
+                </p>
+
+                <p>
+                    The birds have an especially good reason to be here. Jordan lies on a major
+                    <strong>migration route between Africa and Eurasia</strong>. Every spring and
+                    autumn, large numbers of migrating birds pass through the wider Jordan Valley.
+                    In a dry region, patches of open water and vegetation can provide valuable
+                    places to rest and feed before continuing journeys that may span thousands
+                    of kilometres.
+                </p>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>🗣️ Arabic along the way</h3>
+
+                <div class="arabic-phrase">
+                    <p class="arabic">خصيب</p>
+                    <p><strong>Khaṣīb</strong></p>
+                    <p><em>"Fertile" / "fruitful"</em></p>
+                </div>
+
+                <p>
+                    A good word for northern Jordan. <em>Khaṣīb</em> describes land that is
+                    <strong>fertile and productive</strong> — the kind of land where plants and
+                    crops grow abundantly.
+                </p>
+
+                <p>
+                    You'll see the same Arabic root in words connected to fertility and abundance.
+                    So when you encounter <strong>أرض خصبة — arḍ khaṣba</strong>, you're looking
+                    at "fertile land."
+                </p>
+
+                <div class="fun-fact">
+                    <strong>🗣️ Try it:</strong> أرض خصبة<br>
+                    <em>arḍ khaṣba</em> — "fertile land"
+                </div>
+            </div>
+
+        </section>
+        `
     },
     {
         name: "Rasoun",
@@ -851,7 +975,7 @@ for (const run of stravaRuns) {
     totalDistance = totalDistance + run.distanceKm;
 }
 
-// TEMPORARY TESTING totalDistance = 4.5;
+// TEMPORARY TESTING totalDistance = 25.5;
 
 updateProgressDisplay();
 
