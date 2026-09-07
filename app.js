@@ -134,54 +134,44 @@ const stages = [
             <h3>🌿 The landscape</h3>
 
             <p>
-                Forget the image of Jordan as an endless desert, for now. The journey
-                begins in the <strong>green hills of northern Jordan</strong>, where the
-                landscape has much more in common with the Mediterranean than with the
-                deserts you will encounter hundreds of kilometres further south.
+                Umm Qais occupies a rather spectacular starting position. The ancient city
+                sits high above the <strong>Yarmouk River valley</strong>, close to Jordan's
+                borders with Syria and Israel. From here, the land drops away dramatically
+                toward the Jordan Valley, with views stretching across the
+                <strong>Sea of Galilee and the Golan Heights</strong>.
             </p>
 
             <p>
-                Um Qais sits on a high ridge above the <strong>Yarmouk River valley</strong>,
-                close to Jordan's borders with Syria and Israel. From the plateau, the land
-                falls dramatically away toward the Jordan Valley. On a clear day, you can
-                look across the <strong>Sea of Galilee</strong> and toward the
-                <strong>Golan Heights</strong>. An unusually expansive view that helps
-                explain why this hilltop has been strategically important for thousands
-                of years.
+                It is a useful place to get your bearings. Jordan may be a relatively small
+                country, but its landscape is anything but flat. A long spine of highlands
+                runs roughly north to south, while immediately to the west the land plunges
+                into the <strong>Jordan Rift Valley</strong>. That enormous difference in
+                elevation will shape much of the journey to the Red Sea.
             </p>
 
             <p>
-                The hills around you form part of Jordan's
-                <strong>Mediterranean climatic zone</strong>. Winters here are cooler and
-                wetter than in most of the country, allowing grasses, wildflowers, orchards
-                and olive groves to cover slopes that can become intensely green during
-                winter and spring. By late summer, much of that green has faded into the
-                dry gold and ochre of the Mediterranean landscape.
+                Umm Qais also has its own distinctive colour palette. The surrounding
+                countryside is green and gold for much of the year, but scattered through
+                it is <strong>black volcanic basalt</strong>. Ancient Gadara was built partly
+                from this dark local stone, which is why its theatres, streets and ruins can
+                look strikingly different from the pale limestone monuments found elsewhere
+                in Jordan.
             </p>
 
-            <p>
-                Beneath your feet is another clue to the character of the north:
-                <strong>dark volcanic basalt</strong>. Ancient lava flows shaped parts of
-                this region, and the same black stone appears throughout the ruins of
-                Gadara. Here, geology and architecture almost blend into one another —
-                Roman streets, theatres and village houses built from the rock of the
-                surrounding landscape.
-            </p>
-
-            <p>
-                As you leave Um Qais, the trail descends through
-                <strong>farmland, olive groves and rolling valleys</strong>. Ahead lie the
-                wooded highlands of Ajloun, home to some of Jordan's most extensive remaining
-                oak and pine forests.
-            </p>
-
-            <p>
-                Remember this landscape. Over the next <strong>658 kilometres</strong>,
-                it will transform almost completely: green Mediterranean hills will give
-                way to deep wadis, high plateaus, bare sandstone mountains and eventually
-                the vast desert of Wadi Rum.
-            </p>
+            <div class="fun-fact">
+                <strong>🌍 One country, a lot of height:</strong> Jordan stretches from
+                highlands well over 1,000 metres above sea level to the shores of the Dead Sea,
+                more than 400 metres below it. This journey is going to involve rather more
+                up and down than a map of Jordan might suggest.
             </div>
+
+            <p>
+                This northern panorama is the opening scene of a landscape that will change
+                almost completely over the next <strong>658 kilometres</strong>: highlands,
+                deep wadis, the Dead Sea basin, sandstone mountains, open desert and,
+                eventually, the Red Sea.
+            </p>
+        </div>
 
             <div class="waypoint-section">
             <h3>🎥 Have a look</h3>
@@ -210,7 +200,7 @@ const stages = [
                 <h3>🌿 The landscape</h3>
 
                 <p>
-                    <strong>Jordan: famously green and full of lakes... right?</strong>
+                    <strong>Jordan: famously green and full of lakes... Right?</strong>
                     Probably not the image that first came to mind. But here in the far north,
                     Jordan looks surprisingly different from the sandstone deserts it is famous
                     for. Around Ziglab, rolling hills, farmland and olive groves surround valleys
@@ -335,7 +325,125 @@ const stages = [
         latitude: 32.401,
         longitude: 35.758,
         image: "images/rasoun.jpg",
-        description: "X"
+        content: `
+        <section class="waypoint-info">
+
+            <div class="waypoint-section">
+                <h3>🌳 Wait... Jordan has forests?</h3>
+
+                <p>
+                    Yes, actual forests. The highlands around <strong>Rasoun</strong>
+                    contain some of the greenest landscapes in Jordan. Higher elevation and
+                    relatively generous winter rainfall allow Mediterranean woodland to survive
+                    here, with <strong>oak, pistachio and oriental strawberry trees</strong>
+                    growing across the hills.
+                </p>
+
+                <p>
+                    This is one of the most heavily forested parts of the entire Jordan Trail.
+                    The woodland is part of a much wider Mediterranean ecosystem that once covered
+                    considerably more of the highlands of the Levant. Today, the remaining forests
+                    around Ajloun form valuable islands of habitat in an increasingly dry and
+                    cultivated landscape.
+                </p>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>📷 Have a look</h3>
+
+                <div class="waypoint-gallery">
+                    <img src="images/rasoun.jpg" alt="Rasoun in northern Jordan">
+                    <img src="images/rasoun2.jpg" alt="Forested hills around Rasoun">
+                    <img src="images/rasoun3.jpg" alt="Olive groves around Rasoun">
+                </div>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>🫒 Olive country</h3>
+
+                <p>
+                    Among the oak-covered hills are another kind of tree:
+                    <strong>olive trees</strong>. Olives have been cultivated in the Levant for
+                    thousands of years, and they remain deeply woven into the agricultural
+                    landscape and food culture of northern Jordan.
+                </p>
+
+                <p>
+                    Around Rasoun, that relationship is still very tangible. The village's
+                    <strong>Olive Press Trail</strong> takes its name from an old olive press
+                    and connects agricultural life with archaeological remains including
+                    Roman-era tombs and an old village church.
+                </p>
+
+                <p>
+                    Olive oil here is more than something in a bottle at the supermarket.
+                    Harvesting olives is traditionally a family and community activity, while
+                    the oil finds its way into cooking, preservation and products such as
+                    traditional olive-oil soap.
+                </p>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>🏡 Meet village Jordan</h3>
+
+                <p>
+                    Rasoun introduces another side of the country: <strong>rural Jordan</strong>.
+                    The northern section of the Jordan Trail deliberately connects small villages
+                    and communities rather than simply hopping between famous archaeological
+                    sites.
+                </p>
+
+                <p>
+                    In Rasoun and the surrounding villages, local tourism has grown around
+                    <strong>homestays, food, walking routes and handicrafts</strong>. Rasoun
+                    even has a House of Calligraphy, while nearby communities produce goods
+                    such as olive-oil soap and other locally made products.
+                </p>
+
+                <p>
+                    It is also a reminder that history here isn't neatly separated from everyday
+                    life. Old presses, tombs, churches and archaeological remains sit within a
+                    landscape that is still farmed, inhabited and changed by the people living
+                    in it today.
+                </p>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>🗣️ Arabic along the way</h3>
+
+                <div class="arabic-phrase">
+                    <p class="arabic">أهلاً وسهلاً</p>
+                    <p><strong>Ahlan wa sahlan</strong></p>
+                    <p><em>"Welcome!"</em></p>
+                </div>
+
+                <p>
+                    One of the most useful expressions to know in Jordan.
+                    <em>Ahlan wa sahlan</em> is the warm welcome offered when receiving
+                    a guest, and you'll hear it throughout the Arabic-speaking world.
+                </p>
+
+                <p>
+                    The literal meaning is more poetic than the simple English translation.
+                    <em>Ahl</em> relates to family or one's people, while <em>sahl</em> carries
+                    the sense of ease. The expression essentially welcomes someone into a place
+                    where they can feel <strong>among their people and at ease</strong>.
+                </p>
+
+                <div class="fun-fact">
+                    <strong>🗣️ Your Arabic so far:</strong><br>
+                    يلا — <em>Yalla!</em> — Let's go!<br>
+                    خصيب — <em>Khaṣīb</em> — Fertile<br>
+                    أهلاً وسهلاً — <em>Ahlan wa sahlan</em> — Welcome!
+                </div>
+            </div>
+
+        </section>
+        `
     },
     {
         name: "Ajloun Castle",
@@ -343,7 +451,141 @@ const stages = [
         latitude: 32.328,
         longitude: 35.728,
         image: "images/ajloun.jpg",
-        description: "Forested highlands, medieval castles and northern Jordan."
+        content: `
+        <section class="waypoint-info">
+
+            <div class="waypoint-section">
+                <h3>🏰 Welcome to the Middle Ages</h3>
+
+                <p>
+                    Perched high above the surrounding countryside,
+                    <strong>Ajloun Castle</strong> looks exactly like the kind of fortress
+                    you would build if you wanted to know who was moving through northern
+                    Jordan — and stop them if necessary.
+                </p>
+
+                <p>
+                    The castle was constructed in the <strong>12th century</strong> by
+                    Izz al-Din Usama, a commander and relative of <strong>Saladin</strong>,
+                    the Muslim leader famous for his campaigns against the Crusader states.
+                    At the time, this part of the Middle East was caught in a struggle between
+                    Crusader territories and the expanding forces united under Saladin.
+                </p>
+
+                <p>
+                    Ajloun formed part of the defensive network protecting the region.
+                    Its position allowed forces here to watch important routes connecting
+                    <strong>Damascus with the Jordan Valley and the lands further south</strong>.
+                    It also helped protect nearby resources and communities from Crusader
+                    expansion.
+                </p>
+            </div>
+
+
+            <div class="waypoint-section">
+                        <h3>🎥 Have a look</h3>
+
+                        <iframe
+                            class="waypoint-video"
+                            src="https://www.youtube.com/embed/VCwSnO-V3dg?si=QayIDmr_wG4URrs8&amp;start=258"
+                            title="YouTube video"
+                            allowfullscreen>
+                        </iframe>
+                        </div>
+
+
+            <div class="waypoint-section">
+                <h3>⚔️ Saladin, Crusaders & a changing Middle East</h3>
+
+                <p>
+                    To understand Ajloun, zoom out to the <strong>Crusades</strong>.
+                    From the late 11th century onwards, European Crusaders established a
+                    series of states in the eastern Mediterranean, including the
+                    <strong>Kingdom of Jerusalem</strong>. Castles became essential tools
+                    for controlling roads, territory, trade and military movement.
+                </p>
+
+                <p>
+                    Saladin gradually united Muslim territories in Egypt and Syria and
+                    challenged Crusader control of the region. In <strong>1187</strong>,
+                    only a few years after Ajloun Castle was built, his forces defeated
+                    the Crusader army at the Battle of Hattin and recaptured Jerusalem.
+                </p>
+
+                <p>
+                    Ajloun therefore belongs to a much larger medieval landscape of
+                    fortresses stretching across modern Jordan and its neighbours.
+                    Later in the journey, another enormous castle waits at
+                    <strong>Al-Karak</strong> — but that one tells the story from the
+                    opposite side of the conflict: it began as a Crusader stronghold.
+                </p>
+
+                <div class="fun-fact">
+                    <strong>⚔️ Remember this for kilometre 299:</strong>
+                    Ajloun and Karak were once associated with opposing sides of the same
+                    struggle. Your route eventually connects both.
+                </div>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>🧱 A castle that kept changing</h3>
+
+                <p>
+                    Ajloun Castle did not remain frozen in the age of Saladin.
+                    It was enlarged and altered by later rulers as control of the region
+                    changed hands. Towers, gates, chambers and defensive structures were
+                    added or rebuilt over the centuries.
+                </p>
+
+                <p>
+                    The castle also survived something no army could negotiate with:
+                    <strong>earthquakes</strong>. Major earthquakes damaged the fortress,
+                    including destructive events in the 19th century, leaving parts of it
+                    in ruins before later restoration.
+                </p>
+
+                <p>
+                    That makes Ajloun a good example of how historical monuments in Jordan
+                    are rarely products of a single moment. What survives today is the
+                    accumulated result of <strong>warfare, rebuilding, new rulers,
+                    earthquakes and restoration</strong>.
+                </p>
+            </div>
+
+
+            <div class="waypoint-section">
+                <h3>🗣️ Arabic along the way</h3>
+
+                <div class="arabic-phrase">
+                    <p class="arabic">قلعة</p>
+                    <p><strong>Qal'a</strong></p>
+                    <p><em>"Castle" / "fortress"</em></p>
+                </div>
+
+                <p>
+                    An easy one to remember here. <strong>قلعة — qal'a</strong> is the
+                    Arabic word for a castle or fortress. Ajloun Castle is therefore
+                    <strong>قلعة عجلون — Qal'at Ajloun</strong>.
+                </p>
+
+                <p>
+                    It's a useful word to keep. Jordan has plenty of
+                    <em>qal'as</em>, and this won't be the last fortress encountered
+                    on the journey south.
+                </p>
+
+                <div class="fun-fact">
+                    <strong>🗣️ Your Arabic so far:</strong><br>
+                    يلا — <em>Yalla!</em> — Let's go!<br>
+                    خصيب — <em>Khaṣīb</em> — Fertile<br>
+                    أهلاً وسهلاً — <em>Ahlan wa sahlan</em> — Welcome!<br>
+                    قلعة — <em>Qal'a</em> — Castle
+                </div>
+            </div>
+
+        </section>
+        `
     },
     {
         name: "King Talal Dam",
@@ -975,7 +1217,8 @@ for (const run of stravaRuns) {
     totalDistance = totalDistance + run.distanceKm;
 }
 
-// TEMPORARY TESTING totalDistance = 25.5;
+// TEMPORARY TESTING 
+totalDistance =80;
 
 updateProgressDisplay();
 
