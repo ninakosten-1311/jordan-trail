@@ -1652,25 +1652,51 @@ const lightbox = document.getElementById("image-lightbox");
 const lightboxImg = document.getElementById("image-lightbox-img");
 const lightboxClose = document.querySelector(".image-lightbox-close");
 
-document.addEventListener("click", (event) => {
+// IMAGE LIGHTBOX
 
-    if (event.target.matches(".waypoint-gallery img")) {
-        lightboxImg.src = event.target.src;
-        lightboxImg.alt = event.target.alt;
+document.addEventListener("click", function (event) {
+
+    const clickedImage = event.target.closest(".waypoint-gallery img");
+
+    if (clickedImage) {
+
+        const lightbox = document.getElementById("image-lightbox");
+        const lightboxImg = document.getElementById("image-lightbox-img");
+
+        if (!lightbox || !lightboxImg) {
+            console.error("Lightbox HTML not found");
+            return;
+        }
+
+        lightboxImg.src = clickedImage.src;
+        lightboxImg.alt = clickedImage.alt;
 
         lightbox.classList.add("is-open");
+
+        // Prevent the page behind it from scrolling
+        document.body.style.overflow = "hidden";
+
+        return;
     }
 
-});
 
-lightboxClose.addEventListener("click", () => {
-    lightbox.classList.remove("is-open");
-});
+    // Close button
+    if (event.target.closest(".image-lightbox-close")) {
 
-lightbox.addEventListener("click", (event) => {
+        const lightbox = document.getElementById("image-lightbox");
 
-    if (event.target === lightbox) {
         lightbox.classList.remove("is-open");
+        document.body.style.overflow = "";
+
+        return;
+    }
+
+
+    // Tap dark background to close
+    if (event.target.id === "image-lightbox") {
+
+        event.target.classList.remove("is-open");
+        document.body.style.overflow = "";
     }
 
 });
