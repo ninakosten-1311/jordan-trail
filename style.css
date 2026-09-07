@@ -543,6 +543,56 @@ h1::after {
     display: block;
 }
 
+.waypoint-gallery img {
+    cursor: zoom-in;
+}
+
+.image-lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+
+    background: rgba(0, 0, 0, 0.85);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.image-lightbox.is-open {
+    display: flex;
+}
+
+.image-lightbox img {
+    max-width: 95vw;
+    max-height: 90vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 10px;
+}
+
+.image-lightbox-close {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+
+    border: none;
+    background: none;
+
+    color: white;
+    font-size: 42px;
+    line-height: 1;
+
+    cursor: pointer;
+    z-index: 5001;
+}
+
 
 /* MOBILE */
 
@@ -613,15 +663,14 @@ h1::after {
     .waypoint-gallery {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 5px;
+        gap: 6px;
     }
 
     .waypoint-gallery img {
         width: 100%;
         aspect-ratio: 1 / 1;
-        height: auto;
         object-fit: cover;
-        border-radius: 5px;
+        border-radius: 6px;
     }
 
 }

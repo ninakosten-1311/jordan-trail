@@ -1647,3 +1647,30 @@ function openStageModal(stage) {
 
     infoModal.classList.add("is-open");
 }
+
+const lightbox = document.getElementById("image-lightbox");
+const lightboxImg = document.getElementById("image-lightbox-img");
+const lightboxClose = document.querySelector(".image-lightbox-close");
+
+document.addEventListener("click", (event) => {
+
+    if (event.target.matches(".waypoint-gallery img")) {
+        lightboxImg.src = event.target.src;
+        lightboxImg.alt = event.target.alt;
+
+        lightbox.classList.add("is-open");
+    }
+
+});
+
+lightboxClose.addEventListener("click", () => {
+    lightbox.classList.remove("is-open");
+});
+
+lightbox.addEventListener("click", (event) => {
+
+    if (event.target === lightbox) {
+        lightbox.classList.remove("is-open");
+    }
+
+});
