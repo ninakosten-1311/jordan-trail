@@ -2,8 +2,6 @@
     box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&display=swap');
-
 body {
     font-family: "DM Sans", sans-serif;
 }
@@ -47,7 +45,6 @@ body::before {
     pointer-events: none;
 }
 
-
 /* MAIN DASHBOARD */
 
 .dashboard-header {
@@ -71,13 +68,11 @@ body::before {
 /* TITLE */
 
 h1 {
-    font-family: "Nunito Sans", sans-serif;
-    font-size: 42px;
+    font-family: Arial, sans-serif;
+    font-size: 36px;
     font-weight: 700;
-    letter-spacing: -1px;
-    line-height: 1;
-    color: #843622;
-    margin: 0 0 18px;
+    letter-spacing: -0.5px;
+    color: #7F3425;
 }
 
 h1 img {
@@ -533,6 +528,21 @@ h1::after {
     margin-top: 10px;
 }
 
+.waypoint-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.waypoint-gallery img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
 
 /* MOBILE */
 
@@ -599,5 +609,19 @@ h1::after {
     .unlocked-stage-header {
         padding: 20px 22px;
     }
-}
 
+    .waypoint-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .waypoint-gallery img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        height: auto;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+
+}
