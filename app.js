@@ -1010,7 +1010,7 @@ const finishIcon = L.icon({
 
 const runnerIcon = L.icon({
     iconUrl: "images/runner.png",
-    iconSize: [32, 32],
+    iconSize: [50, 50],
     iconAnchor: [16, 16],
     popupAnchor: [0, -16]
 });
@@ -1550,14 +1550,6 @@ function updateProgressDisplay() {
         totalRouteDistance.toFixed(1) +
         " km";
 
-    const percentage =
-        (totalDistance / totalRouteDistance) * 100;
-
-    percentageDisplay.textContent =
-        percentage.toFixed(1) + "%";
-
-    progressFill.style.width =
-        percentage + "%";
 }
 
 function updateCompletedRoute() {
