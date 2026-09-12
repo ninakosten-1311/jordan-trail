@@ -1010,9 +1010,9 @@ const finishIcon = L.icon({
 
 const runnerIcon = L.icon({
     iconUrl: "images/runner.png",
-    iconSize: [50, 50],
-    iconAnchor: [16, 16],
-    popupAnchor: [0, -16]
+    iconSize: [44, 44],
+    iconAnchor: [22, 24],
+    popupAnchor: [0, -24]
 });
 
 function orderRouteSegments(data) {
