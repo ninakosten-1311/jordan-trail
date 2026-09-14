@@ -1547,6 +1547,7 @@ async function loadPublishedProgress() {
         updateMapView();
         updateCompletedRoute();
         updateCurrentStage();
+        addStageMarkers();
         updateUnlockedWaypoints();
 
     } catch (error) {
