@@ -807,6 +807,43 @@ const stages = [
     }
 ];
 
+function positionStageTooltip(marker) {
+
+    const markerPoint =
+        map.latLngToContainerPoint(marker.getLatLng());
+
+    const mapSize = map.getSize();
+
+    const tooltip = marker.getTooltip();
+
+    if (!tooltip) {
+        return;
+    }
+
+    // Marker is near bottom → open tooltip upward
+    if (markerPoint.y > mapSize.y * 0.60) {
+
+        tooltip.options.direction = "top";
+        tooltip.options.offset = L.point(0, -10);
+
+    }
+
+    // Marker is near top → open tooltip downward
+    else if (markerPoint.y < mapSize.y * 0.40) {
+
+        tooltip.options.direction = "bottom";
+        tooltip.options.offset = L.point(0, 10);
+
+    }
+
+    // Somewhere in the middle → preferably upward
+    else {
+
+        tooltip.options.direction = "top";
+        tooltip.options.offset = L.point(0, -10);
+    }
+}
+
 function addStageMarkers() {
 
     for (const stage of stages) {
@@ -872,8 +909,12 @@ function addStageMarkers() {
             if (isMobile) {
 
                 if (isUnlocked) {
+
                     openStageModal(stage);
+
                 } else {
+
+                    positionStageTooltip(marker);
                     marker.openTooltip();
                 }
 
@@ -927,30 +968,11 @@ function addStageMarkers() {
             </div>
         `;
 
-        const markerPoint =
-            map.latLngToContainerPoint(marker.getLatLng());
-
-        const mapHeight = map.getSize().y;
-
-        let tooltipDirection;
-        let tooltipOffset;
-
-        if (markerPoint.y < mapHeight / 2) {
-
-            tooltipDirection = "bottom";
-            tooltipOffset = [0, 10];
-
-        } else {
-
-            tooltipDirection = "top";
-            tooltipOffset = [0, -10];
-        }
-
         marker.bindTooltip(
             tooltipContent,
             {
-                direction: tooltipDirection,
-                offset: tooltipOffset,
+                direction: "top",
+                offset: [0, -10],
                 className: "stage-tooltip",
                 opacity: 1
             }
@@ -963,6 +985,9 @@ function addStageMarkers() {
                 window.matchMedia("(hover: none)").matches;
 
             if (!isMobile) {
+
+                positionStageTooltip(marker);
+
                 marker.openTooltip();
             }
         });
@@ -1184,6 +1209,7 @@ fetch("data/jordan-trail.geojson")
     if (isOwnerPage) {
 
         updateRunnerPosition();
+        updateMapView();
         updateCompletedRoute();
         updateCurrentStage();
         addStageMarkers();
@@ -1247,6 +1273,47 @@ function updateRunnerPosition() {
     }
 }
 
+function updateMapView() {
+
+    if (runnerMarker === null) {
+        return;
+    }
+
+    const runnerPosition = runnerMarker.getLatLng();
+
+    let previousStage = stages[0];
+    let nextStage = null;
+
+    for (const stage of stages) {
+
+        if (stage.startKm <= totalDistance) {
+            previousStage = stage;
+        }
+
+        if (stage.startKm > totalDistance) {
+            nextStage = stage;
+            break;
+        }
+    }
+
+    // If journey is complete, just use final waypoint
+    if (nextStage === null) {
+        nextStage = stages[stages.length - 1];
+    }
+
+    const bounds = L.latLngBounds([
+        [previousStage.latitude, previousStage.longitude],
+        runnerPosition,
+        [nextStage.latitude, nextStage.longitude]
+    ]);
+
+    map.fitBounds(bounds, {
+        paddingTopLeft: [45, 45],
+        paddingBottomRight: [45, 250],
+        maxZoom: 10
+    });
+}
+
 //2.RUNS
 const challengeStartDate = new Date("2026-08-24");
 let stravaRuns =
@@ -1258,7 +1325,8 @@ for (const run of stravaRuns) {
     totalDistance = totalDistance + run.distanceKm;
 }
 
-// TEMPORARY TESTING totalDistance =80;
+// TEMPORARY TESTING 
+totalDistance =43;
 
 updateProgressDisplay();
 
@@ -1343,6 +1411,7 @@ async function syncStravaRuns() {
 
         updateProgressDisplay();
         updateRunnerPosition();
+        updateMapView();
         updateCompletedRoute();
         updateCurrentStage();
         updateUnlockedWaypoints();
@@ -1471,6 +1540,7 @@ async function loadPublishedProgress() {
 
         updateProgressDisplay();
         updateRunnerPosition();
+        updateMapView();
         updateCompletedRoute();
         updateCurrentStage();
         updateUnlockedWaypoints();
