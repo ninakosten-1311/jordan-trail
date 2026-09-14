@@ -1309,7 +1309,7 @@ function updateMapView() {
 
     map.fitBounds(bounds, {
         paddingTopLeft: [45, 45],
-        paddingBottomRight: [45, 250],
+        paddingBottomRight: [45, 200],
         maxZoom: 10
     });
 }
