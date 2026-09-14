@@ -885,6 +885,8 @@ function addStageMarkers() {
             marker = L.circleMarker(
                 [stage.latitude, stage.longitude],
                 {
+                    pane: "waypointPane",
+                    
                     radius: 6,
 
                     color: isUnlocked
@@ -1013,6 +1015,9 @@ let completedRouteLayer = null;
 let totalRouteDistance = 0;
 
 const map = L.map("map").setView([31, 36.0], 7);
+
+map.createPane("waypointPane");
+map.getPane("waypointPane").style.zIndex = 450;
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "&copy; OpenStreetMap contributors"
@@ -1220,7 +1225,6 @@ fetch("data/jordan-trail.geojson")
     } else {
 
         loadPublishedProgress();
-        addStageMarkers();
 
     }
 });
@@ -1309,7 +1313,7 @@ function updateMapView() {
 
     map.fitBounds(bounds, {
         paddingTopLeft: [45, 45],
-        paddingBottomRight: [45, 200],
+        paddingBottomRight: [45, 180],
         maxZoom: 10
     });
 }
@@ -1325,7 +1329,7 @@ for (const run of stravaRuns) {
     totalDistance = totalDistance + run.distanceKm;
 }
 
-// TEMPORARY TESTING totalDistance =43;
+// TEMPORARY TESTING totalDistance =89;
 
 updateProgressDisplay();
 
@@ -1413,6 +1417,7 @@ async function syncStravaRuns() {
         updateMapView();
         updateCompletedRoute();
         updateCurrentStage();
+        addStageMarkers();
         updateUnlockedWaypoints();
 
         await publishProgress();
