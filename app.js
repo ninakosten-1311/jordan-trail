@@ -1619,6 +1619,18 @@ function updateProgressDisplay() {
         totalRouteDistance.toFixed(1) +
         " km";
 
+    const percentage =
+        (totalDistance / totalRouteDistance) * 100;
+
+    if (percentageDisplay) {
+        percentageDisplay.textContent =
+            percentage.toFixed(1) + "%";
+    }
+
+    if (progressFill) {
+        progressFill.style.width =
+            Math.min(percentage, 100) + "%";
+    }
 }
 
 function updateCompletedRoute() {
